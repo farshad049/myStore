@@ -1,6 +1,7 @@
 package com.example.mystore.hilt
 
 import com.example.mystore.MainActivity
+import com.example.mystore.hilt.service.ProductService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,8 +21,8 @@ object NetworkModule {
     @Singleton
     fun providesRetrofit(okHttpClient: OkHttpClient):Retrofit{
         return Retrofit.Builder()
-            .client(okHttpClient) //add okHttp to retrofit
             .baseUrl("https://fakestoreapi.com/")
+            .client(okHttpClient) //add okHttp to retrofit
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
@@ -43,7 +44,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesProductService(retrofit: Retrofit):MainActivity.ProductService{
-        return retrofit.create(MainActivity.ProductService::class.java)
+    fun providesProductService(retrofit: Retrofit): ProductService {
+        return retrofit.create(ProductService::class.java)
     }
 }

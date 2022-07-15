@@ -1,7 +1,5 @@
-package com.example.mystore.hilt
+package com.example.mystore.network
 
-import com.example.mystore.MainActivity
-import com.example.mystore.hilt.service.ProductService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,17 +10,17 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.time.Duration
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
-
 object NetworkModule {
-    
+
     @Provides
     @Singleton
-    fun providesRetrofit(okHttpClient: OkHttpClient):Retrofit{
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://fakestoreapi.com/")
-            .client(okHttpClient) //add okHttp to retrofit
+            .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
@@ -30,7 +28,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun providesOkHttpClient(): OkHttpClient {
-        val duration =Duration.ofSeconds(30)
+        val duration = Duration.ofSeconds(30)
         return OkHttpClient.Builder()
             .connectTimeout(duration)
             .readTimeout(duration)
@@ -38,13 +36,9 @@ object NetworkModule {
             .build()
     }
 
-
-
-
-
     @Provides
     @Singleton
-    fun providesProductService(retrofit: Retrofit): ProductService {
-        return retrofit.create(ProductService::class.java)
+    fun providesProductsService(retrofit: Retrofit): ProductsService {
+        return retrofit.create(ProductsService::class.java)
     }
 }

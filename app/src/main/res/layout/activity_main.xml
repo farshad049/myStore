@@ -1,147 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
     android:background="@color/purple_100"
     tools:context=".MainActivity">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardProduct"
-        android:layout_width="0dp"
-        android:layout_height="130dp"
-        android:layout_margin="16dp"
-        android:background="?colorSurface"
-        android:elevation="8dp"
-        app:cardCornerRadius="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivProduct"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:background="@color/purple_100"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerRound"
-                tools:src="@tools:sample/avatars" />
-
-            <androidx.core.widget.ContentLoadingProgressBar
-                android:id="@+id/progressImage"
-                style="?android:attr/progressBarStyleSmall"
-                android:indeterminateOnly="true"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                app:layout_constraintBottom_toBottomOf="@id/ivProduct"
-                app:layout_constraintEnd_toEndOf="@id/ivProduct"
-                app:layout_constraintStart_toStartOf="@id/ivProduct"
-                app:layout_constraintTop_toTopOf="@id/ivProduct" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFavorite"
-                style="@style/Widget.Material3.Button.Icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="6dp"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                app:icon="@drawable/ic_round_favorite_border_24"
-                app:iconGravity="textEnd"
-                app:iconSize="12dp"
-                app:layout_constraintEnd_toEndOf="@id/ivProduct"
-                app:layout_constraintTop_toTopOf="@id/ivProduct" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textStyle="bold"
-                android:textColor="?colorOnBackground"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivProduct"
-                app:layout_constraintTop_toTopOf="@id/ivProduct"
-                tools:text="Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCategory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="?colorOnSurface"
-                app:layout_constraintStart_toStartOf="@id/tvTitle"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                tools:text="men's clothing" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="?colorOnSurface"
-                app:layout_constraintBottom_toBottomOf="@id/ivProduct"
-                app:layout_constraintStart_toStartOf="@id/tvTitle"
-                tools:text="109.95" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddToCard"
-                style="@style/Widget.Material3.Button.Icon"
-                android:layout_width="68dp"
-                android:layout_height="34dp"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                app:cornerRadius="12dp"
-                app:icon="@drawable/ic_round_shopping_cart_24"
-                app:iconGravity="textEnd"
-                app:layout_constraintBottom_toBottomOf="@id/ivProduct"
-                app:layout_constraintEnd_toEndOf="@id/tvTitle" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSuccessAdded"
-                style="@style/Widget.Material3.Button.Icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:backgroundTint="@color/teal_200"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                app:icon="@drawable/ic_round_check_24"
-                app:iconGravity="textEnd"
-                app:iconSize="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/btnAddToCard"
-                app:layout_constraintEnd_toStartOf="@+id/btnAddToCard"
-                app:layout_constraintStart_toStartOf="@+id/btnAddToCard"
-                app:layout_constraintTop_toTopOf="@+id/btnAddToCard" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:layout_constraintEnd_toEndOf="@id/cardProduct"
-        app:layout_constraintStart_toStartOf="@id/cardProduct"
-        app:layout_constraintTop_toBottomOf="@id/cardProduct"
-        tools:text="Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday"
-        tools:visibility="visible"
-        android:visibility="gone"/>
-
+    <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/epoxyRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="24dp"
+        app:itemSpacing="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="7"
+        tools:listitem="@layout/model_product_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,15 +8,15 @@ import com.airbnb.epoxy.TypedEpoxyController
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelProductItemBinding
 import com.example.mystore.epoxy.ViewBindingKotlinModel
-import com.example.mystore.model.domain.Product
+import com.example.mystore.model.domain.DomainProduct
 
-class ProductEpoxyController:TypedEpoxyController<List<Product>>() {
+class ProductEpoxyController:TypedEpoxyController<List<DomainProduct>>() {
 
-    override fun buildModels(data: List<Product>?) {
+    override fun buildModels(data: List<DomainProduct>?) {
         if (data.isNullOrEmpty()){
             repeat(7) {
                 val epoxyId = it + 1
-                ProductEpoxyModel(product = null).id(epoxyId).addTo(this)
+                ProductEpoxyModel(domainProduct = null).id(epoxyId).addTo(this)
             }
             return
         }
@@ -28,13 +28,13 @@ class ProductEpoxyController:TypedEpoxyController<List<Product>>() {
 
     }
 
-    data class ProductEpoxyModel(val product: Product?)
+    data class ProductEpoxyModel(val domainProduct: DomainProduct?)
         :ViewBindingKotlinModel<ModelProductItemBinding>(R.layout.model_product_item) {
         override fun ModelProductItemBinding.bind() {
-            shimmerLayout.isVisible = product == null // if product is null then set shimmerLayout to be visible
-            cardProduct.isInvisible = product == null
+            shimmerLayout.isVisible = domainProduct == null // if product is null then set shimmerLayout to be visible
+            cardProduct.isInvisible = domainProduct == null
 
-            product?.let {product->
+            domainProduct?.let { product->
                 shimmerLayout.stopShimmer()
 
                 tvTitle.text=product.title

@@ -2,15 +2,21 @@ package com.example.mystore
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import com.example.mystore.arch.ProductViewModel
 import com.example.mystore.databinding.ActivityMainBinding
 import com.example.mystore.network.ProductsService
-import com.example.mystore.model.domain.Product
+import com.example.mystore.model.domain.DomainProduct
 import com.example.mystore.model.mapper.ProductMapper
 import com.example.mystore.model.network.NetworkProduct
 import com.example.mystore.ui.ProductEpoxyController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -20,6 +26,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var productsService: ProductsService
     @Inject
     lateinit var productMapper: ProductMapper
+
+    private val viewModel:ProductViewModel by lazy {
+        ViewModelProvider(this)[ProductViewModel::class.java]
+    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -34,15 +44,13 @@ class MainActivity : AppCompatActivity() {
         //set controller.data to empty list in order to handle loading state in epoxy controller
         controller.setData(emptyList())
 
-        lifecycleScope.launchWhenStarted {
-            val response:Response<List<NetworkProduct>> = productsService.getAllProducts()
-            val domainProduct: List<Product> = response.body()?.map {
-                productMapper.buildFrom(networkProduct = it)
-            }?: emptyList()
-
-            controller.setData(domainProduct)
-            Log.i("DATA",response!!.body().toString())
+        viewModel.refreshProducts()
+        viewModel.store.stateFlow.map { it.products }.distinctUntilChanged().asLiveData().observe(this){
+            controller.setData(it)
         }
+
+
+
 
 
 

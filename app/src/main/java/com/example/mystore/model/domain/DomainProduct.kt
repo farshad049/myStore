@@ -2,7 +2,7 @@ package com.example.mystore.model.domain
 
 import java.math.BigDecimal
 
-data class Product(
+data class DomainProduct(
     val category: String,
     val description: String,
     val id: Int,

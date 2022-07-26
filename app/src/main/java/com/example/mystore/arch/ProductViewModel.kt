@@ -19,20 +19,13 @@ class ProductViewModel @Inject constructor(
     ):ViewModel() {
 
 
-    fun refreshProducts(){
-        viewModelScope.launch {
+    fun refreshProducts()=viewModelScope.launch {
             val response=repository.getProduct()
-            store.update {
-                return@update it.copy(products = response)
+            store.update {applicationState->
+                return@update applicationState.copy(products = response)
             }
-
-            delay(5000)
-            store.update {
-                return@update it.copy(favoriteProductIds = setOf(1,2,4) )
-            }
-
         }
-    }
+
 
 
 

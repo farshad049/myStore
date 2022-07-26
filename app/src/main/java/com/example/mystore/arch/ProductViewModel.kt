@@ -8,6 +8,7 @@ import com.example.mystore.model.domain.DomainProduct
 import com.example.mystore.redux.ApplicationState
 import com.example.mystore.redux.Store
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +25,12 @@ class ProductViewModel @Inject constructor(
             store.update {
                 return@update it.copy(products = response)
             }
+
+            delay(5000)
+            store.update {
+                return@update it.copy(favoriteProductIds = setOf(1,2,4) )
+            }
+
         }
     }
 

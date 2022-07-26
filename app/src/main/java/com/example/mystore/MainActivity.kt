@@ -13,8 +13,10 @@ import com.example.mystore.network.ProductsService
 import com.example.mystore.model.domain.DomainProduct
 import com.example.mystore.model.mapper.ProductMapper
 import com.example.mystore.model.network.NetworkProduct
+import com.example.mystore.model.ui.UiProduct
 import com.example.mystore.ui.ProductEpoxyController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import retrofit2.Response
@@ -33,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -45,9 +46,19 @@ class MainActivity : AppCompatActivity() {
         controller.setData(emptyList())
 
         viewModel.refreshProducts()
-        viewModel.store.stateFlow.map { it.products }.distinctUntilChanged().asLiveData().observe(this){
+
+        combine(
+            viewModel.store.stateFlow.map { it.products },
+            viewModel.store.stateFlow.map { it.favoriteProductIds }
+        ){listOfProducts,setOfFavoriteProducts ->
+            listOfProducts.map {
+                UiProduct(it,setOfFavoriteProducts.contains(it.id))//second element is > if in that set of product eny product is favorite
+            }
+        }.distinctUntilChanged().asLiveData().observe(this){
             controller.setData(it)
         }
+
+
 
 
 

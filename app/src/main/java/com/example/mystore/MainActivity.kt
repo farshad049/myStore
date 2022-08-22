@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.mystore.arch.ProductViewModel
 import com.example.mystore.databinding.ActivityMainBinding
@@ -25,10 +27,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val appBarConfiguration=AppBarConfiguration(
+        topLevelDestinationIds = setOf(R.id.productListFragment,R.id.profileFragment)
+        )
+
         //enable the nav controller
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navHostController = navHostFragment.navController
-        setupActionBarWithNavController(navHostController)
+
+        //set up fragment title in toolbar
+        setupActionBarWithNavController(navHostController,appBarConfiguration)
+
+        // Setup bottom nav bar
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navHostController)
 
 
 

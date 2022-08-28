@@ -1,24 +1,23 @@
 package com.example.mystore.ui.productList
 
-import androidx.core.view.isGone
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.lifecycle.viewModelScope
-import coil.load
+import com.airbnb.epoxy.CarouselModel_
 import com.airbnb.epoxy.TypedEpoxyController
-import com.example.mystore.R
 import com.example.mystore.arch.ProductViewModel
-import com.example.mystore.databinding.ModelProductItemBinding
-import com.example.mystore.epoxy.ViewBindingKotlinModel
+import com.example.mystore.epoxy.FilterEpoxyModel
+import com.example.mystore.epoxy.ProductEpoxyModel
+import com.example.mystore.model.domain.Filter
+import com.example.mystore.model.ui.ProductAndFilterUiState
+import com.example.mystore.model.ui.UiFilter
 import com.example.mystore.model.ui.UiProduct
 import kotlinx.coroutines.launch
 
 class ProductEpoxyController(
     private val viewModel: ProductViewModel
-):TypedEpoxyController<List<UiProduct>>() {
+):TypedEpoxyController<ProductAndFilterUiState>() {
 
-    override fun buildModels(data: List<UiProduct>?) {
-        if (data.isNullOrEmpty()){
+    override fun buildModels(data: ProductAndFilterUiState?) {
+        if (data == null){
             repeat(7) {
                 val epoxyId = it + 1
                 ProductEpoxyModel(uiProduct = null,::onFavoriteClick,::onExpandClick).id(epoxyId).addTo(this)
@@ -26,7 +25,17 @@ class ProductEpoxyController(
             return
         }
 
-        data.forEach {
+        val filterList = data.filters.map {
+            FilterEpoxyModel(it , ::onFilterClick).id(it.filter.filterOriginalName)
+        }
+        CarouselModel_()
+            .models(filterList)
+            .id("filters")
+            .addTo(this)
+
+
+
+        data.products.forEach {
             ProductEpoxyModel(it,::onFavoriteClick,::onExpandClick).id(it.product.id).addTo(this)
         }
     }
@@ -41,44 +50,7 @@ class ProductEpoxyController(
 
 
 
-    data class ProductEpoxyModel(val uiProduct: UiProduct?, val onFavoriteClick:(Int) -> Unit, val onExpandClick:(Int)->Unit )
-        :ViewBindingKotlinModel<ModelProductItemBinding>(R.layout.model_product_item) {
-        override fun ModelProductItemBinding.bind() {
-            shimmerLayout.isVisible = uiProduct == null // if product is null then set shimmerLayout to be visible
-            cardProduct.isInvisible = uiProduct == null
 
-            uiProduct?.let { combinedProduct->
-                shimmerLayout.stopShimmer()
-
-                tvTitle.text=combinedProduct.product.title
-                tvCategory.text=combinedProduct.product.category
-                tvDescription.text=combinedProduct.product.description
-                tvPrice.text= combinedProduct.product.price.toString()
-                progressImage.isVisible=true
-                ivProduct.load(combinedProduct.product.image){
-                    listener { request, result ->
-                        progressImage.isGone=true
-                    }
-                }
-
-                val imageRes=if (combinedProduct.isFavorite) {
-                    R.drawable.ic_round_favorite_24
-                } else {
-                    R.drawable.ic_round_favorite_border_24
-                }
-
-                tvDescription.isVisible=combinedProduct.isExpanded
-                root.setOnClickListener { onExpandClick(combinedProduct.product.id) }
-
-                btnFavorite.setIconResource(imageRes )
-
-                btnFavorite.setOnClickListener { onFavoriteClick(combinedProduct.product.id) }
-
-
-            }?: shimmerLayout.startShimmer()
-
-        }
-    }
 
 
 
@@ -111,6 +83,21 @@ class ProductEpoxyController(
                 return@update currentState.copy(expandedProductIds = newExpandIds)
             }
         }
+    }
+
+    private fun onFilterClick(filter: Filter){
+        viewModel.viewModelScope.launch {
+            viewModel.store.update { currentState->
+                val currentSelectedFilter = currentState.productFilterInfo.selectedFilter
+                return@update currentState.copy(
+                    productFilterInfo = currentState.productFilterInfo.copy(
+                        selectedFilter = if (currentSelectedFilter != filter) filter else null
+                    )
+                )
+
+            }
+        }
+
     }
 
 

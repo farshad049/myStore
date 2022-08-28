@@ -11,34 +11,69 @@ import com.example.mystore.model.ui.ProductAndFilterUiState
 import com.example.mystore.model.ui.UiFilter
 import com.example.mystore.model.ui.UiProduct
 import kotlinx.coroutines.launch
+import java.lang.RuntimeException
+import java.util.*
 
 class ProductEpoxyController(
     private val viewModel: ProductViewModel
 ):TypedEpoxyController<ProductAndFilterUiState>() {
 
     override fun buildModels(data: ProductAndFilterUiState?) {
-        if (data == null){
-            repeat(7) {
-                val epoxyId = it + 1
-                ProductEpoxyModel(uiProduct = null,::onFavoriteClick,::onExpandClick).id(epoxyId).addTo(this)
+
+        when (data) {
+
+
+            is ProductAndFilterUiState.Success -> {
+
+
+                val filterList = data.filters.map {
+                    FilterEpoxyModel(it, ::onFilterClick).id(it.filter.filterOriginalName)
+                }
+                CarouselModel_()
+                    .models(filterList)
+                    .id("filters")
+                    .addTo(this)
+
+
+
+                data.products.forEach {
+                    ProductEpoxyModel(it, ::onFavoriteClick, ::onExpandClick).id(it.product.id)
+                        .addTo(this)
+                }
+
+
+
+
+
             }
-            return
+
+
+
+
+
+
+
+
+
+
+
+
+
+            is ProductAndFilterUiState.Loading -> {
+                repeat(7) {
+                    val epoxyId = UUID.randomUUID().toString()
+                    ProductEpoxyModel(uiProduct = null, ::onFavoriteClick, ::onExpandClick).id(
+                        epoxyId
+                    ).addTo(this)
+                }
+                return
+               }
+
+
+            else -> {throw RuntimeException("unhandled branch! $data")}
+        }
         }
 
-        val filterList = data.filters.map {
-            FilterEpoxyModel(it , ::onFilterClick).id(it.filter.filterOriginalName)
-        }
-        CarouselModel_()
-            .models(filterList)
-            .id("filters")
-            .addTo(this)
-
-
-
-        data.products.forEach {
-            ProductEpoxyModel(it,::onFavoriteClick,::onExpandClick).id(it.product.id).addTo(this)
-        }
-    }
 
 
 

@@ -29,8 +29,7 @@ class ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
 
         val controller = ProductEpoxyController(viewModel)
         binding.epoxyRecyclerView.setController(controller)
-        //set controller.data to empty list in order to handle loading state in epoxy controller
-        //controller.setData(emptyList()) todo
+
 
 
 
@@ -40,6 +39,12 @@ class ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
             viewModel.store.stateFlow.map { it.expandedProductIds } ,
             viewModel.store.stateFlow.map { it.productFilterInfo }
         ){listOfProducts , setOfFavoriteProducts , setOfExpandedProducts , productFilterInfo ->
+
+            //if list is empty run the shimmer
+            if (listOfProducts.isEmpty()){
+                return@combine ProductAndFilterUiState.Loading
+            }
+
 
             //making a list with type of UiProduct
            val uiProducts = listOfProducts.map {
@@ -59,12 +64,12 @@ class ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
             }.toSet()
 
             return@combine if (productFilterInfo.selectedFilter == null){
-                ProductAndFilterUiState(
+                ProductAndFilterUiState.Success(
                     filters = uiFilter ,
                     products = uiProducts
                 )
             }else{
-                ProductAndFilterUiState(
+                ProductAndFilterUiState.Success(
                     filters = uiFilter,
                     products = uiProducts.filter { it.product.category == productFilterInfo.selectedFilter.filterOriginalName }
                 )

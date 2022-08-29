@@ -37,7 +37,7 @@ class ProductEpoxyController(
 
 
                 data.products.forEach {
-                    ProductEpoxyModel(it, ::onFavoriteClick, ::onExpandClick).id(it.product.id)
+                    ProductEpoxyModel(it, ::onFavoriteClick, ::onExpandClick, ::onAddToCartClick).id(it.product.id)
                         .addTo(this)
                 }
 
@@ -62,7 +62,7 @@ class ProductEpoxyController(
             is ProductAndFilterUiState.Loading -> {
                 repeat(7) {
                     val epoxyId = UUID.randomUUID().toString()
-                    ProductEpoxyModel(uiProduct = null, ::onFavoriteClick, ::onExpandClick).id(
+                    ProductEpoxyModel(uiProduct = null, ::onFavoriteClick, ::onExpandClick, ::onAddToCartClick).id(
                         epoxyId
                     ).addTo(this)
                 }
@@ -132,7 +132,20 @@ class ProductEpoxyController(
 
             }
         }
+    }
 
+    private fun onAddToCartClick(selectedProductId: Int){
+        viewModel.viewModelScope.launch {
+            viewModel.store.update { currentState->
+                val currentInCardIds= currentState.inCartProductIds
+                val newInCartIds= if (currentInCardIds.contains(selectedProductId)){
+                    currentInCardIds.filter { it != selectedProductId }.toSet()
+                }else{
+                    currentInCardIds + setOf(selectedProductId)
+                }
+                return@update currentState.copy(inCartProductIds = newInCartIds)
+            }
+        }
     }
 
 

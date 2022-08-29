@@ -7,6 +7,7 @@ import com.example.mystore.databinding.FragmentProductListBinding
 import com.example.mystore.databinding.FragmentProfileBinding
 import com.example.mystore.ui.BaseFragment
 
+
 class ProfileFragment:BaseFragment(R.layout.fragment_profile) {
     private var _binding: FragmentProfileBinding? = null
     private val binding by lazy { _binding!! }

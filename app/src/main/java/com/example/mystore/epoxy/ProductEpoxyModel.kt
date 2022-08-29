@@ -8,8 +8,12 @@ import com.example.mystore.R
 import com.example.mystore.databinding.ModelProductItemBinding
 import com.example.mystore.model.ui.UiProduct
 
-data class ProductEpoxyModel(val uiProduct: UiProduct?, val onFavoriteClick:(Int) -> Unit, val onExpandClick:(Int)->Unit )
-    :ViewBindingKotlinModel<ModelProductItemBinding>(R.layout.model_product_item) {
+data class ProductEpoxyModel(
+    val uiProduct: UiProduct? ,
+    val onFavoriteClick : (Int) -> Unit ,
+    val onExpandClick : (Int) -> Unit ,
+    val onAddToCartClick : (Int) -> Unit
+) :ViewBindingKotlinModel<ModelProductItemBinding>(R.layout.model_product_item) {
     override fun ModelProductItemBinding.bind() {
         shimmerLayout.isVisible = uiProduct == null // if product is null then set shimmerLayout to be visible
         cardProduct.isInvisible = uiProduct == null
@@ -34,12 +38,19 @@ data class ProductEpoxyModel(val uiProduct: UiProduct?, val onFavoriteClick:(Int
                 R.drawable.ic_round_favorite_border_24
             }
 
+            //handling text box below the products
             tvDescription.isVisible=combinedProduct.isExpanded
             root.setOnClickListener { onExpandClick(combinedProduct.product.id) }
 
             btnFavorite.setIconResource(imageRes )
 
+            //handling click on favorite button
             btnFavorite.setOnClickListener { onFavoriteClick(combinedProduct.product.id) }
+            //handling visibility of btnSuccessAdded
+            btnSuccessAdded.isVisible= combinedProduct.isInCart
+
+            //handling click on add to card button
+            btnAddToCard.setOnClickListener { onAddToCartClick(combinedProduct.product.id) }
 
 
         }?: shimmerLayout.startShimmer()

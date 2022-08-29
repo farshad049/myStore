@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.map
 @AndroidEntryPoint
 class ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
     private var _binding : FragmentProductListBinding? = null
-    private val binding by lazy { _binding!! }
+    private val binding get() = _binding!!
 
     private val viewModel: ProductViewModel by viewModels()
 
@@ -37,8 +37,9 @@ class ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
             viewModel.store.stateFlow.map { it.products } ,
             viewModel.store.stateFlow.map { it.favoriteProductIds } ,
             viewModel.store.stateFlow.map { it.expandedProductIds } ,
-            viewModel.store.stateFlow.map { it.productFilterInfo }
-        ){listOfProducts , setOfFavoriteProducts , setOfExpandedProducts , productFilterInfo ->
+            viewModel.store.stateFlow.map { it.productFilterInfo },
+            viewModel.store.stateFlow.map { it.inCartProductIds }
+        ){listOfProducts , setOfFavoriteProducts , setOfExpandedProducts , productFilterInfo , setOfInCardtProducts->
 
             //if list is empty run the shimmer
             if (listOfProducts.isEmpty()){
@@ -51,7 +52,8 @@ class ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
                 UiProduct(
                     it ,
                     setOfFavoriteProducts.contains(it.id) ,
-                    setOfExpandedProducts.contains(it.id)
+                    setOfExpandedProducts.contains(it.id),
+                    setOfInCardtProducts.contains(it.id)
                 )
             }
 

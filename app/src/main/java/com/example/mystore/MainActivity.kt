@@ -3,18 +3,24 @@ package com.example.mystore
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.airbnb.epoxy.Carousel
 import com.example.mystore.arch.ProductViewModel
 import com.example.mystore.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+
 
     private val viewModel: ProductViewModel by lazy {
         ViewModelProvider(this)[ProductViewModel::class.java]
@@ -28,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val appBarConfiguration=AppBarConfiguration(
-        topLevelDestinationIds = setOf(R.id.productListFragment,R.id.profileFragment)
+        topLevelDestinationIds = setOf(R.id.productListFragment,R.id.profileFragment,R.id.cartFragment)
         )
 
         //enable the nav controller
@@ -40,6 +46,19 @@ class MainActivity : AppCompatActivity() {
 
         // Setup bottom nav bar
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navHostController)
+
+        //to prevent snapping in carousel
+        Carousel.setDefaultGlobalSnapHelperFactory(null)
+
+
+        //set count of in cart product in bottom navigation badge
+        viewModel.store.stateFlow.map { it.inCartProductIds.size }.distinctUntilChanged().asLiveData().observe(this){
+            binding.bottomNavigationView.getOrCreateBadge(R.id.cartFragment).apply {
+                number = it
+                isVisible = it > 0  //if count of products is greater than 0 show them
+            }
+
+        }
 
 
 

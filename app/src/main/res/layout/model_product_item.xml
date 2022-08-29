@@ -125,7 +125,9 @@
                 app:layout_constraintBottom_toBottomOf="@+id/btnAddToCard"
                 app:layout_constraintEnd_toStartOf="@+id/btnAddToCard"
                 app:layout_constraintStart_toStartOf="@+id/btnAddToCard"
-                app:layout_constraintTop_toTopOf="@+id/btnAddToCard" />
+                app:layout_constraintTop_toTopOf="@+id/btnAddToCard"
+                android:visibility="invisible"
+                tools:visibility="visible"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

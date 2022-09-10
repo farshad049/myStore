@@ -9,7 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.airbnb.epoxy.Carousel
-import com.example.mystore.arch.ProductViewModel
+import com.example.mystore.ui.productList.ProductViewModel
 import com.example.mystore.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged

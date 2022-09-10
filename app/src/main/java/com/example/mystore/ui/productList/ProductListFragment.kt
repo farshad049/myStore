@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import com.example.mystore.R
-import com.example.mystore.arch.ProductViewModel
 import com.example.mystore.databinding.FragmentProductListBinding
 import com.example.mystore.model.ui.ProductAndFilterUiState
 import com.example.mystore.model.ui.UiFilter
@@ -17,7 +16,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 @AndroidEntryPoint
-class ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
+class  ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
     private var _binding : FragmentProductListBinding? = null
     private val binding get() = _binding!!
 
@@ -34,28 +33,15 @@ class ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
 
 
         combine(
-            viewModel.store.stateFlow.map { it.products } ,
-            viewModel.store.stateFlow.map { it.favoriteProductIds } ,
-            viewModel.store.stateFlow.map { it.expandedProductIds } ,
+            viewModel.uiProductListReducer.reduce(viewModel.store),
             viewModel.store.stateFlow.map { it.productFilterInfo },
-            viewModel.store.stateFlow.map { it.inCartProductIds }
-        ){listOfProducts , setOfFavoriteProducts , setOfExpandedProducts , productFilterInfo , setOfInCardtProducts->
+        ){UiProducts, productFilterInfo->
 
             //if list is empty run the shimmer
-            if (listOfProducts.isEmpty()){
+            if (UiProducts.isEmpty()){
                 return@combine ProductAndFilterUiState.Loading
             }
 
-
-            //making a list with type of UiProduct
-           val uiProducts = listOfProducts.map {
-                UiProduct(
-                    it ,
-                    setOfFavoriteProducts.contains(it.id) ,
-                    setOfExpandedProducts.contains(it.id),
-                    setOfInCardtProducts.contains(it.id)
-                )
-            }
 
             //making a list with type of UiFilter
             val uiFilter = productFilterInfo.filters.map {filter->
@@ -65,17 +51,14 @@ class ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
                 )
             }.toSet()
 
-            return@combine if (productFilterInfo.selectedFilter == null){
-                ProductAndFilterUiState.Success(
-                    filters = uiFilter ,
-                    products = uiProducts
-                )
+            val filteredProducts = if (productFilterInfo.selectedFilter == null){
+                UiProducts
             }else{
-                ProductAndFilterUiState.Success(
-                    filters = uiFilter,
-                    products = uiProducts.filter { it.product.category == productFilterInfo.selectedFilter.filterOriginalName }
-                )
+                UiProducts.filter { it.product.category == productFilterInfo.selectedFilter.filterOriginalName }
+
             }
+
+            return@combine ProductAndFilterUiState.Success(uiFilter , filteredProducts)
 
 
         }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner){

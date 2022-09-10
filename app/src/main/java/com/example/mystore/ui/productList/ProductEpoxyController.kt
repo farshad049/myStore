@@ -3,13 +3,10 @@ package com.example.mystore.ui.productList
 import androidx.lifecycle.viewModelScope
 import com.airbnb.epoxy.CarouselModel_
 import com.airbnb.epoxy.TypedEpoxyController
-import com.example.mystore.arch.ProductViewModel
 import com.example.mystore.epoxy.FilterEpoxyModel
 import com.example.mystore.epoxy.ProductEpoxyModel
 import com.example.mystore.model.domain.Filter
 import com.example.mystore.model.ui.ProductAndFilterUiState
-import com.example.mystore.model.ui.UiFilter
-import com.example.mystore.model.ui.UiProduct
 import kotlinx.coroutines.launch
 import java.lang.RuntimeException
 import java.util.*

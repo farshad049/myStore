@@ -1,16 +1,14 @@
-package com.example.mystore.arch
+package com.example.mystore.ui.productList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mystore.model.domain.DomainProduct
+import com.example.mystore.arch.ProductRepository
 import com.example.mystore.model.domain.Filter
 import com.example.mystore.redux.ApplicationState
 import com.example.mystore.redux.Store
+import com.example.mystore.redux.reducer.UiProductListReducer
 import com.example.mystore.util.FilterGenerator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +16,8 @@ import javax.inject.Inject
 class ProductViewModel @Inject constructor(
     private val repository : ProductRepository,
     val store : Store<ApplicationState>,
-    val filterGenerator: FilterGenerator
+    private val filterGenerator: FilterGenerator ,
+    val uiProductListReducer: UiProductListReducer
     ) : ViewModel() {
 
 

@@ -7,13 +7,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/epoxyRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="7"
-        tools:listitem="@layout/model_product_item"
+        tools:listitem="@layout/model_cart_item"
         android:paddingHorizontal="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="24dp"

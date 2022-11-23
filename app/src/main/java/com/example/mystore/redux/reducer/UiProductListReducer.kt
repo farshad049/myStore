@@ -1,7 +1,6 @@
 package com.example.mystore.redux.reducer
 
-import com.example.mystore.model.ui.ProductAndFilterUiState
-import com.example.mystore.model.ui.UiProduct
+import com.example.mystore.data.model.ui.UiProduct
 import com.example.mystore.redux.ApplicationState
 import com.example.mystore.redux.Store
 import kotlinx.coroutines.flow.Flow
@@ -27,10 +26,10 @@ class UiProductListReducer @Inject constructor() {
             //making a list with type of UiProduct
             return@combine listOfProducts.map {
                 UiProduct(
-                    it ,
-                    setOfFavoriteProducts.contains(it.id) ,
-                    setOfExpandedProducts.contains(it.id),
-                    setOfInCardtProducts.contains(it.id)
+                    product = it ,
+                    isFavorite = setOfFavoriteProducts.contains(it.id) ,
+                    isExpanded = setOfExpandedProducts.contains(it.id),
+                    isInCart = setOfInCardtProducts.contains(it.id)
                 )
             }
         }

@@ -1,4 +1,4 @@
-package com.example.mystore.model.domain
+package com.example.mystore.data.model.domain
 
 import java.math.BigDecimal
 

@@ -1,8 +1,8 @@
-package com.example.mystore.arch
+package com.example.mystore.data.repository
 
-import com.example.mystore.model.domain.DomainProduct
-import com.example.mystore.model.mapper.ProductMapper
-import com.example.mystore.network.ProductsService
+import com.example.mystore.data.model.domain.DomainProduct
+import com.example.mystore.data.model.mapper.ProductMapper
+import com.example.mystore.data.network.ProductsService
 import javax.inject.Inject
 
 class ProductRepository @Inject constructor(

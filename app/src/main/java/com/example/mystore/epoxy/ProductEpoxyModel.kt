@@ -6,12 +6,12 @@ import androidx.core.view.isVisible
 import coil.load
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelProductItemBinding
-import com.example.mystore.model.ui.UiProduct
+import com.example.mystore.data.model.ui.UiProduct
 
 data class ProductEpoxyModel(
-    val uiProduct: UiProduct? ,
-    val onFavoriteClick : (Int) -> Unit ,
-    val onExpandClick : (Int) -> Unit ,
+    val uiProduct: UiProduct?,
+    val onFavoriteClick : (Int) -> Unit,
+    val onExpandClick : (Int) -> Unit,
     val onAddToCartClick : (Int) -> Unit
 ) :ViewBindingKotlinModel<ModelProductItemBinding>(R.layout.model_product_item) {
     override fun ModelProductItemBinding.bind() {

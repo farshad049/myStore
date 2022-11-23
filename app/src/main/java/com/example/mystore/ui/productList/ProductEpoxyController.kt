@@ -5,8 +5,7 @@ import com.airbnb.epoxy.CarouselModel_
 import com.airbnb.epoxy.TypedEpoxyController
 import com.example.mystore.epoxy.FilterEpoxyModel
 import com.example.mystore.epoxy.ProductEpoxyModel
-import com.example.mystore.model.domain.Filter
-import com.example.mystore.model.ui.ProductAndFilterUiState
+import com.example.mystore.data.model.domain.Filter
 import kotlinx.coroutines.launch
 import java.lang.RuntimeException
 import java.util.*
@@ -19,9 +18,7 @@ class ProductEpoxyController(
 
         when (data) {
 
-
             is ProductAndFilterUiState.Success -> {
-
 
                 val filterList = data.filters.map {
                     FilterEpoxyModel(it, ::onFilterClick).id(it.filter.filterOriginalName)
@@ -32,26 +29,11 @@ class ProductEpoxyController(
                     .addTo(this)
 
 
-
                 data.products.forEach {
                     ProductEpoxyModel(it, ::onFavoriteClick, ::onExpandClick, ::onAddToCartClick).id(it.product.id)
                         .addTo(this)
                 }
-
-
-
-
-
             }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -65,19 +47,9 @@ class ProductEpoxyController(
                 }
                 return
                }
-
-
             else -> {throw RuntimeException("unhandled branch! $data")}
+             }
         }
-        }
-
-
-
-
-
-
-
-
 
 
 
@@ -90,14 +62,10 @@ class ProductEpoxyController(
     private fun onFavoriteClick(selectedFavoriteItemId:Int){
         viewModel.viewModelScope.launch {
             viewModel.store.update { currentState->
-                val currentFavoriteIds= currentState.favoriteProductIds
-                val newFavoriteIds= if (currentFavoriteIds.contains(selectedFavoriteItemId)){
-                    //if we this item is already favorite,then unfavorite it
-                    currentFavoriteIds.filter { it != selectedFavoriteItemId }.toSet()
-                }else{
-                    currentFavoriteIds + setOf(selectedFavoriteItemId)
-                }
-                return@update currentState.copy(favoriteProductIds = newFavoriteIds)
+                return@update viewModel.uiProductFavoriteUpdater.onProductFavorited(
+                    productId = selectedFavoriteItemId ,
+                    currentState = currentState
+                )
             }
         }
     }
@@ -134,13 +102,7 @@ class ProductEpoxyController(
     private fun onAddToCartClick(selectedProductId: Int){
         viewModel.viewModelScope.launch {
             viewModel.store.update { currentState->
-                val currentInCardIds= currentState.inCartProductIds
-                val newInCartIds= if (currentInCardIds.contains(selectedProductId)){
-                    currentInCardIds.filter { it != selectedProductId }.toSet()
-                }else{
-                    currentInCardIds + setOf(selectedProductId)
-                }
-                return@update currentState.copy(inCartProductIds = newInCartIds)
+                return@update viewModel.uiAddToCartUpdater.onAddToCart(selectedProductId , currentState)
             }
         }
     }

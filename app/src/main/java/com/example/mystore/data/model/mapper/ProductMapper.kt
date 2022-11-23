@@ -1,7 +1,7 @@
-package com.example.mystore.model.mapper
+package com.example.mystore.data.model.mapper
 
-import com.example.mystore.model.domain.DomainProduct
-import com.example.mystore.model.network.NetworkProduct
+import com.example.mystore.data.model.domain.DomainProduct
+import com.example.mystore.data.model.network.NetworkProduct
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.*

@@ -1,4 +1,4 @@
-package com.example.mystore.network
+package com.example.mystore.data.network
 
 import dagger.Module
 import dagger.Provides

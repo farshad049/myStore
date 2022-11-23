@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import com.example.mystore.R
 import com.example.mystore.databinding.FragmentCartBinding
-import com.example.mystore.model.ui.UiProduct
+import com.example.mystore.data.model.ui.UiProduct
 import com.example.mystore.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -27,8 +27,9 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
         binding.epoxyRecyclerView.setController(controller)
 
         // what we care about is only that product which are in in cart
-        viewModel.uiProductListReducer.reduce(store = viewModel.store).map { uiProducts-> uiProducts.filter { it.isInCart } }
-            .distinctUntilChanged().asLiveData().observe(viewLifecycleOwner){
+        viewModel.uiProductListReducer.reduce(store = viewModel.store).map { uiProducts->
+            uiProducts.filter { it.isInCart }
+        }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner){
                val viewState = if (it.isEmpty()){
                     UiState.Empty
                 }else{

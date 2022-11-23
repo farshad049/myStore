@@ -1,7 +1,7 @@
 package com.example.mystore.util
 
-import com.example.mystore.model.domain.DomainProduct
-import com.example.mystore.model.domain.Filter
+import com.example.mystore.data.model.domain.DomainProduct
+import com.example.mystore.data.model.domain.Filter
 import javax.inject.Inject
 
 class FilterGenerator @Inject constructor() {

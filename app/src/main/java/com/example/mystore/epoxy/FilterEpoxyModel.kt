@@ -4,8 +4,8 @@ package com.example.mystore.epoxy
 import androidx.core.content.ContextCompat
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelFilterBinding
-import com.example.mystore.model.domain.Filter
-import com.example.mystore.model.ui.UiFilter
+import com.example.mystore.data.model.domain.Filter
+import com.example.mystore.data.model.ui.UiFilter
 
 data class FilterEpoxyModel(
     val uiFilter : UiFilter,

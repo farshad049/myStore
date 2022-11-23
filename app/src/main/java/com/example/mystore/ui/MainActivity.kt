@@ -1,4 +1,4 @@
-package com.example.mystore
+package com.example.mystore.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.airbnb.epoxy.Carousel
+import com.example.mystore.R
 import com.example.mystore.ui.productList.ProductViewModel
 import com.example.mystore.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +35,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val appBarConfiguration=AppBarConfiguration(
-        topLevelDestinationIds = setOf(R.id.productListFragment,R.id.profileFragment,R.id.cartFragment)
+        topLevelDestinationIds = setOf(
+            R.id.productListFragment,
+            R.id.profileFragment,
+            R.id.cartFragment
+        )
         )
 
         //enable the nav controller

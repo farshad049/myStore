@@ -1,7 +1,7 @@
 package com.example.mystore.redux
 
-import com.example.mystore.model.domain.DomainProduct
-import com.example.mystore.model.domain.Filter
+import com.example.mystore.data.model.domain.DomainProduct
+import com.example.mystore.data.model.domain.Filter
 
 
 data class ApplicationState(
@@ -14,7 +14,7 @@ data class ApplicationState(
 
 {
     data class ProductFilterInfo(
-        val filters : Set<Filter> = emptySet() ,
+        val filters : Set<Filter> = emptySet(),
         val selectedFilter : Filter? = null
     )
 }

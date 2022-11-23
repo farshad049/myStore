@@ -1,12 +1,13 @@
 package com.example.mystore.ui.cart
 
-import coil.load
 import com.airbnb.epoxy.TypedEpoxyController
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelCartEmptyBinding
-import com.example.mystore.databinding.ModelCartItemBinding
+import com.example.mystore.epoxy.CartEpoxyModel
+import com.example.mystore.epoxy.DividerEpoxyModel
+import com.example.mystore.epoxy.VerticalSpaceEpoxyModel
 import com.example.mystore.epoxy.ViewBindingKotlinModel
-import com.example.mystore.model.ui.UiProduct
+import com.example.mystore.util.toPx
 
 class CartFragmentEpoxyController
     : TypedEpoxyController<CartFragment.UiState>() {
@@ -14,22 +15,20 @@ class CartFragmentEpoxyController
     override fun buildModels(data: CartFragment.UiState?) {
         when (data){
             null , is CartFragment.UiState.Empty -> {
-                CartEmptyEpoxyModel(
-                    onGoShoppingClick = {
-
-                    }
-                )
+                CartEmptyEpoxyModel(onGoShoppingClick = {})
             }
              is CartFragment.UiState.NotEmpty ->{
+
                  data.products.forEachIndexed { index, uiProduct ->
+
+                     VerticalSpaceEpoxyModel(8.toPx()).id("top_space_$index").addTo(this)
+                     if (index != 0) DividerEpoxyModel(horizontalPadding = 16.toPx()).id("divider_$index").addTo(this)
+                     VerticalSpaceEpoxyModel(8.toPx()).id("bottom_space_$index").addTo(this)
+
                      CartEpoxyModel(
                          uiProduct ,
-                         onFavoriteClick = {
-
-                         } ,
-                         onDeleteClick = {
-
-                         }
+                         onFavoriteClick = {} ,
+                         onDeleteClick = {}
                      ).id(uiProduct.product.id).addTo(this)
                  }
 
@@ -42,22 +41,6 @@ class CartFragmentEpoxyController
 
 
 
-
-    data class CartEpoxyModel(
-        val uiProduct : UiProduct ,
-        val onFavoriteClick : ()-> Unit ,
-        val onDeleteClick : () -> Unit
-    ): ViewBindingKotlinModel<ModelCartItemBinding>(R.layout.model_cart_item) {
-        override fun ModelCartItemBinding.bind() {
-            productImageView.load(uiProduct.product.image)
-            productTitleTextView.text = uiProduct.product.title
-
-            val imageRes = if (uiProduct.isFavorite) R.drawable.ic_round_favorite_24 else R.drawable.ic_round_favorite_border_24
-            favoriteImageView.setIconResource(imageRes)
-            favoriteImageView.setOnClickListener{ onFavoriteClick() }
-            deleteIconImageView.setOnClickListener { onDeleteClick }
-        }
-    }
 
     data class CartEmptyEpoxyModel(
         val onGoShoppingClick : () -> Unit

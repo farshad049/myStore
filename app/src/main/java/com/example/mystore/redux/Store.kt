@@ -12,12 +12,12 @@ class Store<T>(initialState:T) {
 
     private val mutex=Mutex()
 
-    suspend fun update(updateBlock:(T)->T) = mutex.withLock{
+    suspend fun update(updateBlock:(T) -> T) = mutex.withLock{
         val newState = updateBlock(_stateFlow.value)
         _stateFlow.value=newState
     }
 
-    suspend fun read(readBlock:(T)->T)=mutex.withLock {
+    suspend fun <S> read(readBlock:(T) -> S)=mutex.withLock {
         readBlock(_stateFlow.value)
     }
 

@@ -5,12 +5,14 @@ import com.example.mystore.R
 import com.example.mystore.data.model.ui.UiProduct
 import com.example.mystore.databinding.ModelCartItemBinding
 
+
 data class CartEpoxyModel(
     val uiProduct : UiProduct,
     val onFavoriteClick : ()-> Unit,
     val onDeleteClick : () -> Unit
 ): ViewBindingKotlinModel<ModelCartItemBinding>(R.layout.model_cart_item) {
     override fun ModelCartItemBinding.bind() {
+
         productImageView.load(uiProduct.product.image)
         productTitleTextView.text = uiProduct.product.title
 
@@ -18,5 +20,16 @@ data class CartEpoxyModel(
         favoriteImageView.setIconResource(imageRes)
         favoriteImageView.setOnClickListener{ onFavoriteClick() }
         deleteIconImageView.setOnClickListener { onDeleteClick() }
+
+        viewQuantity.apply {
+            tvQuantity.text = 9.toString()
+            btnRemove.setOnClickListener {  }
+            btnAdd.setOnClickListener {  }
+        }
+
+
+
+
+
     }
 }

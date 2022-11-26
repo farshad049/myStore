@@ -8,9 +8,9 @@ class UiAddToCartUpdater @Inject constructor() {
     fun onAddToCart(productId : Int , currentState: ApplicationState):ApplicationState{
         val currentInCardIds= currentState.inCartProductIds
         val newInCartIds= if (currentInCardIds.contains(productId)){
-            currentInCardIds.filter { it != productId }.toSet()
+            currentInCardIds - productId
         }else{
-            currentInCardIds + setOf(productId)
+            currentInCardIds + productId
         }
         return currentState.copy(inCartProductIds = newInCartIds)
     }

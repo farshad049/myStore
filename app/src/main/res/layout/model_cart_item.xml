@@ -12,7 +12,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:background="?colorSurface"
         >
 
@@ -28,7 +27,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerRound"
-            tools:src="@tools:sample/backgrounds/scenic[2]" />
+            tools:src="@tools:sample/backgrounds/scenic[2]"
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/favoriteImageView"
@@ -59,6 +59,15 @@
             app:layout_constraintTop_toTopOf="@id/productImageView"
             tools:text="Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops" />
 
+        <include
+            android:id="@+id/viewQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_quantity_selector"
+            app:layout_constraintStart_toStartOf="@+id/productTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/deleteIconImageView"
+            />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/deleteIconImageView"
             android:layout_width="wrap_content"
@@ -69,7 +78,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_round_delete_outline_24"
-            app:tint="@color/purple_700"/>
+            app:tint="?colorPrimary"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

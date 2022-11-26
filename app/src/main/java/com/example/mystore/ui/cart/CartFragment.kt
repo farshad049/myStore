@@ -8,6 +8,7 @@ import com.example.mystore.R
 import com.example.mystore.databinding.FragmentCartBinding
 import com.example.mystore.data.model.ui.UiProduct
 import com.example.mystore.ui.BaseFragment
+import com.example.mystore.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -23,7 +24,7 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
         super.onViewCreated(view, savedInstanceState)
         _binding= FragmentCartBinding.bind(view)
 
-        val controller = CartFragmentEpoxyController()
+        val controller = CartFragmentEpoxyController(viewModel , ::onGoShoppingClick)
         binding.epoxyRecyclerView.setController(controller)
 
         // what we care about is only that product which are in in cart
@@ -44,12 +45,15 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
 
 
 
-
     }//FUN
 
     sealed interface UiState {
         object Empty : UiState
         data class NotEmpty(val products: List<UiProduct>) : UiState
+    }
+
+    private fun onGoShoppingClick(){
+        (activity as? MainActivity)?.navigateToTab(R.id.productListFragment)
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.mystore.ui
 
 import android.os.Bundle
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -81,6 +82,11 @@ class MainActivity : AppCompatActivity() {
 
 
     }//FUN
+
+    //i use this function to send user to every bottom navigation item i want
+    fun navigateToTab(@IdRes destinationId : Int){
+        binding.bottomNavigationView.selectedItemId = destinationId
+    }
 
 
 

@@ -1,21 +1,22 @@
 package com.example.mystore.ui.cart
 
+import androidx.lifecycle.viewModelScope
 import com.airbnb.epoxy.TypedEpoxyController
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelCartEmptyBinding
-import com.example.mystore.epoxy.CartEpoxyModel
-import com.example.mystore.epoxy.DividerEpoxyModel
-import com.example.mystore.epoxy.VerticalSpaceEpoxyModel
-import com.example.mystore.epoxy.ViewBindingKotlinModel
+import com.example.mystore.epoxy.*
 import com.example.mystore.util.toPx
+import kotlinx.coroutines.launch
 
-class CartFragmentEpoxyController
-    : TypedEpoxyController<CartFragment.UiState>() {
+class CartFragmentEpoxyController(
+    private val viewModel : CartFragmentViewModel ,
+    private val onGoShoppingClick : () -> Unit
+) : TypedEpoxyController<CartFragment.UiState>() {
 
     override fun buildModels(data: CartFragment.UiState?) {
         when (data){
             null , is CartFragment.UiState.Empty -> {
-                CartEmptyEpoxyModel(onGoShoppingClick = {})
+                CartEmptyEpoxyModel(onGoShoppingClick).id("empty_card").addTo(this)
             }
              is CartFragment.UiState.NotEmpty ->{
 
@@ -27,8 +28,26 @@ class CartFragmentEpoxyController
 
                      CartEpoxyModel(
                          uiProduct ,
-                         onFavoriteClick = {} ,
-                         onDeleteClick = {}
+                         onFavoriteClick = {
+                                           viewModel.viewModelScope.launch {
+                                               viewModel.store.update {
+                                                   return@update viewModel.uiProductFavoriteUpdater.onProductFavorited(
+                                                       productId = uiProduct.product.id ,
+                                                       currentState = it
+                                                   )
+                                               }
+                                           }
+                         } ,
+                         onDeleteClick = {
+                             viewModel.viewModelScope.launch {
+                                 viewModel.store.update {
+                                     return@update viewModel.uiAddToCartUpdater.onAddToCart(
+                                         productId = uiProduct.product.id ,
+                                         currentState = it
+                                     )
+                                 }
+                             }
+                         }
                      ).id(uiProduct.product.id).addTo(this)
                  }
 
@@ -42,12 +61,4 @@ class CartFragmentEpoxyController
 
 
 
-    data class CartEmptyEpoxyModel(
-        val onGoShoppingClick : () -> Unit
-    ):ViewBindingKotlinModel<ModelCartEmptyBinding>(R.layout.model_cart_item) {
-        override fun ModelCartEmptyBinding.bind() {
-            onGoShoppingClick()
-        }
-
-    }
 }

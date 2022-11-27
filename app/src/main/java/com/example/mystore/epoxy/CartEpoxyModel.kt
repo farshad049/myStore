@@ -3,28 +3,30 @@ package com.example.mystore.epoxy
 import coil.load
 import com.example.mystore.R
 import com.example.mystore.data.model.ui.UiProduct
+import com.example.mystore.data.model.ui.UiProductInCart
 import com.example.mystore.databinding.ModelCartItemBinding
 
 
 data class CartEpoxyModel(
-    val uiProduct : UiProduct,
-    val onFavoriteClick : ()-> Unit,
-    val onDeleteClick : () -> Unit
+    val uiProductInCart : UiProductInCart,
+    val onFavoriteClick : (Int)-> Unit,
+    val onDeleteClick : (Int) -> Unit ,
+    val onQuantityChangeClick : (Int , Int) -> Unit //first Int in Product Id ,second Int is quantity ,and i take care of both - and + functionality with same onClick
 ): ViewBindingKotlinModel<ModelCartItemBinding>(R.layout.model_cart_item) {
     override fun ModelCartItemBinding.bind() {
 
-        productImageView.load(uiProduct.product.image)
-        productTitleTextView.text = uiProduct.product.title
+        productImageView.load(uiProductInCart.uiProduct.product.image)
+        productTitleTextView.text = uiProductInCart.uiProduct.product.title
 
-        val imageRes = if (uiProduct.isFavorite) R.drawable.ic_round_favorite_24 else R.drawable.ic_round_favorite_border_24
+        val imageRes = if (uiProductInCart.uiProduct.isFavorite) R.drawable.ic_round_favorite_24 else R.drawable.ic_round_favorite_border_24
         favoriteImageView.setIconResource(imageRes)
-        favoriteImageView.setOnClickListener{ onFavoriteClick() }
-        deleteIconImageView.setOnClickListener { onDeleteClick() }
+        favoriteImageView.setOnClickListener{ onFavoriteClick(uiProductInCart.uiProduct.product.id) }
+        deleteIconImageView.setOnClickListener { onDeleteClick(uiProductInCart.uiProduct.product.id) }
 
         viewQuantity.apply {
-            tvQuantity.text = 9.toString()
-            btnRemove.setOnClickListener {  }
-            btnAdd.setOnClickListener {  }
+            tvQuantity.text = uiProductInCart.quantity.toString()
+            btnRemove.setOnClickListener { onQuantityChangeClick(uiProductInCart.uiProduct.product.id,uiProductInCart.quantity -1) }
+            btnAdd.setOnClickListener { onQuantityChangeClick(uiProductInCart.uiProduct.product.id,uiProductInCart.quantity +1) }
         }
 
 

@@ -7,9 +7,11 @@ import androidx.lifecycle.asLiveData
 import com.example.mystore.R
 import com.example.mystore.databinding.FragmentCartBinding
 import com.example.mystore.data.model.ui.UiProduct
+import com.example.mystore.data.model.ui.UiProductInCart
 import com.example.mystore.ui.BaseFragment
 import com.example.mystore.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
@@ -27,17 +29,33 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
         val controller = CartFragmentEpoxyController(viewModel , ::onGoShoppingClick)
         binding.epoxyRecyclerView.setController(controller)
 
+
         // what we care about is only that product which are in in cart
-        viewModel.uiProductListReducer.reduce(store = viewModel.store).map { uiProducts->
-            uiProducts.filter { it.isInCart }
+       val uiProductInCard =  viewModel.uiProductListReducer.reduce(store = viewModel.store).map { uiProducts ->
+           uiProducts.filter { it.isInCart }
+       }
+
+        combine(
+            uiProductInCard ,
+            viewModel.store.stateFlow.map { it.cartQuantitiesMap }
+        ){uiProducts , quantityMap ->
+            uiProducts.map {
+                UiProductInCart(
+                    uiProduct = it ,
+                    quantity = quantityMap[it.product.id] ?: 1
+                )
+            }
         }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner){
-               val viewState = if (it.isEmpty()){
-                    UiState.Empty
-                }else{
-                    UiState.NotEmpty(it)
-                }
-                controller.setData(viewState)
+            val viewState = if (it.isEmpty()){
+                UiState.Empty
+            }else{
+                UiState.NotEmpty(it)
+            }
+            controller.setData(viewState)
         }
+
+
+
 
 
 
@@ -49,7 +67,7 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
 
     sealed interface UiState {
         object Empty : UiState
-        data class NotEmpty(val products: List<UiProduct>) : UiState
+        data class NotEmpty(val products: List<UiProductInCart>) : UiState
     }
 
     private fun onGoShoppingClick(){

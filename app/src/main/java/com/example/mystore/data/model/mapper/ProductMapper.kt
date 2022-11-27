@@ -16,7 +16,8 @@ class ProductMapper @Inject constructor() {
             id = networkProduct.id,
             image = networkProduct.image,
             price = BigDecimal(networkProduct.price).setScale(2, RoundingMode.HALF_UP),
-            title = networkProduct.title
+            title = networkProduct.title ,
+            rating = DomainProduct.Rating(rate = networkProduct.rating.rate , ratingCount = networkProduct.rating.count)
         )
     }
 }

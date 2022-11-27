@@ -87,6 +87,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvTitle"
                 tools:text="men's clothing" />
 
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
@@ -94,9 +95,39 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="?colorOnSurface"
-                app:layout_constraintBottom_toBottomOf="@id/ivProduct"
+                app:layout_constraintBottom_toBottomOf="@id/btnAddToCard"
                 app:layout_constraintStart_toStartOf="@id/tvTitle"
+                app:layout_constraintTop_toTopOf="@+id/btnAddToCard"
                 tools:text="109.95" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/indicatorRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/btnAddToCard"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAddToCard"
+                app:layout_constraintStart_toEndOf="@+id/tvPrice"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddToCard"
+                app:indicatorColor="@color/purple_500"
+                app:trackColor="@color/purple_100"
+                android:progress="42"
+                android:max="50"
+                app:indicatorSize="28dp"
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/indicatorRating"
+                app:layout_constraintStart_toStartOf="@id/indicatorRating"
+                app:layout_constraintEnd_toEndOf="@+id/indicatorRating"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorRating"
+                tools:text="4.2"
+                android:textSize="10sp"
+                android:textColor="?colorOnSurface"
+                />
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddToCard"

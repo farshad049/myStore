@@ -7,6 +7,7 @@ import coil.load
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelProductItemBinding
 import com.example.mystore.data.model.ui.UiProduct
+import kotlin.math.roundToInt
 
 data class ProductEpoxyModel(
     val uiProduct: UiProduct?,
@@ -37,6 +38,9 @@ data class ProductEpoxyModel(
             } else {
                 R.drawable.ic_round_favorite_border_24
             }
+
+            tvRating.text = "${uiProduct.product.rating.rate}"
+            indicatorRating.progress = ((uiProduct.product.rating.rate)*10).roundToInt()
 
             //handling text box below the products
             tvDescription.isVisible=combinedProduct.isExpanded

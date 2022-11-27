@@ -1,19 +1,24 @@
 package com.example.mystore.ui.cart
 
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.airbnb.epoxy.EpoxyTouchHelper
 import com.example.mystore.R
-import com.example.mystore.databinding.FragmentCartBinding
-import com.example.mystore.data.model.ui.UiProduct
 import com.example.mystore.data.model.ui.UiProductInCart
+import com.example.mystore.databinding.FragmentCartBinding
+import com.example.mystore.epoxy.CartEpoxyModel
 import com.example.mystore.ui.BaseFragment
 import com.example.mystore.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import java.lang.Float.max
 
 @AndroidEntryPoint
 class CartFragment: BaseFragment(R.layout.fragment_cart) {
@@ -53,6 +58,50 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
             }
             controller.setData(viewState)
         }
+
+
+
+
+
+
+        //swipe to delete
+        EpoxyTouchHelper
+            .initSwiping(binding.epoxyRecyclerView)
+            .right()
+            .withTarget(CartEpoxyModel::class.java)
+            .andCallbacks(object : EpoxyTouchHelper.SwipeCallbacks<CartEpoxyModel>(){
+                override fun onSwipeCompleted(
+                    model: CartEpoxyModel?,
+                    itemView: View?,
+                    position: Int,
+                    direction: Int
+                ) {
+                    viewModel.viewModelScope.launch {
+                        model?.let {epoxyModel->
+                            viewModel.store.update {
+                                return@update viewModel.uiAddToCartUpdater.onAddToCart(
+                                    productId = epoxyModel.uiProductInCart.uiProduct.product.id ,
+                                    currentState = it
+                                )
+                            }
+                        }
+                    }
+                }
+
+                //in order to show the swipe to delete text view while swiping
+                override fun onSwipeProgressChanged(
+                    model: CartEpoxyModel?,
+                    itemView: View?,
+                    swipeProgress: Float,
+                    canvas: Canvas?
+                ) {
+                    itemView?.findViewById<View>(R.id.swipeToDismiss)?.apply {
+                        translationX = max(-itemView.translationX , -measuredWidth.toFloat())
+                        alpha = 5f * swipeProgress //sets the transmission speed to fade in
+                    }
+                }
+
+             })
 
 
 

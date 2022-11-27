@@ -1,84 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="6dp"
-    app:cardCornerRadius="6dp"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/swipeToDismiss"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:background="@drawable/background_rounded_12"
+        android:backgroundTint="@color/error_red"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="swipe to delete"
+        android:gravity="center"
+        />
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?colorSurface"
+        android:layout_height="match_parent"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="6dp"
         >
 
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/productImageView"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
-            android:background="@color/purple_100"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="3:4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerRound"
-            tools:src="@tools:sample/backgrounds/scenic[2]"
-            />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/favoriteImageView"
-            style="@style/Widget.Material3.Button.Icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="6dp"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            app:icon="@drawable/ic_round_favorite_border_24"
-            app:iconGravity="textEnd"
-            app:iconSize="12dp"
-            app:layout_constraintEnd_toEndOf="@id/productImageView"
-            app:layout_constraintTop_toTopOf="@id/productImageView" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/productTitleTextView"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="@color/purple_700"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/productImageView"
-            app:layout_constraintTop_toTopOf="@id/productImageView"
-            tools:text="Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops" />
+            android:background="?colorSurface"
+            >
 
-        <include
-            android:id="@+id/viewQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            layout="@layout/layout_quantity_selector"
-            app:layout_constraintStart_toStartOf="@+id/productTitleTextView"
-            app:layout_constraintBottom_toBottomOf="@+id/deleteIconImageView"
-            />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/productImageView"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:background="@color/purple_100"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerRound"
+                tools:src="@tools:sample/backgrounds/scenic[2]"
+                />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/deleteIconImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:padding="6dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_round_delete_outline_24"
-            app:tint="?colorPrimary"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/favoriteImageView"
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="6dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:icon="@drawable/ic_round_favorite_border_24"
+                app:iconGravity="textEnd"
+                app:iconSize="12dp"
+                app:layout_constraintEnd_toEndOf="@id/productImageView"
+                app:layout_constraintTop_toTopOf="@id/productImageView" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/productTitleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/purple_700"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/productImageView"
+                app:layout_constraintTop_toTopOf="@id/productImageView"
+                tools:text="Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops" />
+
+            <include
+                android:id="@+id/viewQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_quantity_selector"
+                app:layout_constraintStart_toStartOf="@+id/productTitleTextView"
+                app:layout_constraintBottom_toBottomOf="@+id/productImageView"
+                android:layout_marginBottom="12dp"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

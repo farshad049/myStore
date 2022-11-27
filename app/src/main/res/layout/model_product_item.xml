@@ -17,7 +17,9 @@
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -108,7 +110,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/btnAddToCard"
                 app:layout_constraintStart_toEndOf="@+id/tvPrice"
                 app:layout_constraintEnd_toStartOf="@+id/btnAddToCard"
-                app:indicatorColor="@color/purple_500"
+                app:indicatorColor="@color/purple_400"
                 app:trackColor="@color/purple_100"
                 android:progress="42"
                 android:max="50"

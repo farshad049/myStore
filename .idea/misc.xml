@@ -4,13 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/drawable-v24/background_rounded_12.xml" value="0.18" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/drawable/background_rounded_top_12.xml" value="0.169" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/drawable/ic_round_add_circle_outline_24.xml" value="0.169" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/drawable/ic_round_delete_outline_24.xml" value="0.18" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/drawable/ic_round_favorite_24.xml" value="0.2595" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/drawable/ic_round_favorite_border_24.xml" value="0.2595" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/drawable/purple_rounded_background.xml" value="0.169" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/layout/fragment_cart.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/layout/fragment_cart.xml" value="0.27037037037037037" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/layout/fragment_product_detail.xml" value="0.365625" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/layout/fragment_product_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/myStore/app/src/main/res/layout/layout_quanity_selector.xml" value="0.36666666666666664" />

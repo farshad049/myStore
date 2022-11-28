@@ -30,7 +30,6 @@ class CartFragmentEpoxyController(
                      CartEpoxyModel(
                          uiProductInCart ,
                          onFavoriteClick = ::onFavoriteClick ,
-                         onDeleteClick = ::onDeleteClick,
                          onQuantityChangeClick = ::onQuantityChangeClick
                      ).id(uiProductInCart.uiProduct.product.id).addTo(this)
                  }
@@ -51,16 +50,6 @@ class CartFragmentEpoxyController(
         }
     }
 
-    private fun onDeleteClick(selectedItemId : Int){
-        viewModel.viewModelScope.launch {
-            viewModel.store.update {
-                return@update viewModel.uiAddToCartUpdater.onAddToCart(
-                    productId = selectedItemId ,
-                    currentState = it
-                )
-            }
-        }
-    }
 
     private fun onQuantityChangeClick(selectedItemId : Int , newQuantity : Int){
         if (newQuantity <1) return // in order to not showing negative count

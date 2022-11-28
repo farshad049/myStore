@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.lang.Float.max
+import java.math.BigDecimal
+import java.text.NumberFormat
 
 @AndroidEntryPoint
 class CartFragment: BaseFragment(R.layout.fragment_cart) {
@@ -33,6 +35,8 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
 
         val controller = CartFragmentEpoxyController(viewModel , ::onGoShoppingClick)
         binding.epoxyRecyclerView.setController(controller)
+
+        swipeToDelete()
 
 
         // what we care about is only that product which are in in cart
@@ -57,6 +61,7 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
                 UiState.NotEmpty(it)
             }
             controller.setData(viewState)
+            updateTotalLayout(it)
         }
 
 
@@ -64,6 +69,30 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }//FUN
+
+    private fun updateTotalLayout(uiProductInCart: List<UiProductInCart>){
+        val currentFormatter = NumberFormat.getCurrencyInstance()
+        val totalAmount  =  uiProductInCart.sumOf { BigDecimal(it.quantity) * it.uiProduct.product.price }
+        val description = "${uiProductInCart.size} items for ${currentFormatter.format(totalAmount)}"
+        binding.tvTotalDescription.text = description
+        binding.btnCheckout.isEnabled = uiProductInCart.isNotEmpty()
+    }
+
+    private fun swipeToDelete(){
         //swipe to delete
         EpoxyTouchHelper
             .initSwiping(binding.epoxyRecyclerView)
@@ -101,23 +130,17 @@ class CartFragment: BaseFragment(R.layout.fragment_cart) {
                     }
                 }
 
-             })
+            })
+    }
 
 
-
-
-
-
-
-
-
-
-    }//FUN
 
     sealed interface UiState {
         object Empty : UiState
         data class NotEmpty(val products: List<UiProductInCart>) : UiState
     }
+
+
 
     private fun onGoShoppingClick(){
         (activity as? MainActivity)?.navigateToTab(R.id.productListFragment)

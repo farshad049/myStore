@@ -7,6 +7,7 @@ import coil.load
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelProductItemBinding
 import com.example.mystore.data.model.ui.UiProduct
+import java.text.NumberFormat
 import kotlin.math.roundToInt
 
 data class ProductEpoxyModel(
@@ -25,7 +26,10 @@ data class ProductEpoxyModel(
             tvTitle.text=combinedProduct.product.title
             tvCategory.text=combinedProduct.product.category
             tvDescription.text=combinedProduct.product.description
-            tvPrice.text= combinedProduct.product.price.toString()
+
+            val currencyFormatter = NumberFormat.getCurrencyInstance()
+            tvPrice.text= currencyFormatter.format(combinedProduct.product.price)
+
             progressImage.isVisible=true
             ivProduct.load(combinedProduct.product.image){
                 listener { request, result ->

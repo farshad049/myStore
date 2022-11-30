@@ -2,12 +2,12 @@ package com.example.mystore.ui.productList
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import com.example.mystore.R
 import com.example.mystore.databinding.FragmentProductListBinding
-import com.example.mystore.data.model.ui.UiFilter
-import com.example.mystore.ui.BaseFragment
+import com.example.mystore.ui.productList.epoxy.ProductEpoxyController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class  ProductListFragment : BaseFragment(R.layout.fragment_product_list) {
+class  ProductListFragment : Fragment(R.layout.fragment_product_list) {
     private var _binding : FragmentProductListBinding? = null
     private val binding get() = _binding!!
 

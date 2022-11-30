@@ -41,4 +41,14 @@ object NetworkModule {
     fun providesProductsService(retrofit: Retrofit): ProductsService {
         return retrofit.create(ProductsService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun providesAuthService(retrofit: Retrofit): AuthService {
+        return retrofit.create(AuthService::class.java)
+    }
+
+
+
+
 }

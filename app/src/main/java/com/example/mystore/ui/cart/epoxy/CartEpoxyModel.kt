@@ -1,10 +1,10 @@
-package com.example.mystore.epoxy
+package com.example.mystore.ui.cart.epoxy
 
 import coil.load
 import com.example.mystore.R
-import com.example.mystore.data.model.ui.UiProduct
 import com.example.mystore.data.model.ui.UiProductInCart
 import com.example.mystore.databinding.ModelCartItemBinding
+import com.example.mystore.epoxy.ViewBindingKotlinModel
 import java.math.BigDecimal
 import java.text.NumberFormat
 

@@ -1,4 +1,4 @@
-package com.example.mystore.epoxy
+package com.example.mystore.ui.productList.epoxy
 
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
@@ -7,6 +7,7 @@ import coil.load
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelProductItemBinding
 import com.example.mystore.data.model.ui.UiProduct
+import com.example.mystore.epoxy.ViewBindingKotlinModel
 import java.text.NumberFormat
 import kotlin.math.roundToInt
 
@@ -15,7 +16,7 @@ data class ProductEpoxyModel(
     val onFavoriteClick : (Int) -> Unit,
     val onExpandClick : (Int) -> Unit,
     val onAddToCartClick : (Int) -> Unit
-) :ViewBindingKotlinModel<ModelProductItemBinding>(R.layout.model_product_item) {
+) : ViewBindingKotlinModel<ModelProductItemBinding>(R.layout.model_product_item) {
     override fun ModelProductItemBinding.bind() {
         shimmerLayout.isVisible = uiProduct == null // if product is null then set shimmerLayout to be visible
         cardProduct.isInvisible = uiProduct == null

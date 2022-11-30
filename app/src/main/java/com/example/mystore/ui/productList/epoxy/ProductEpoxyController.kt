@@ -1,11 +1,11 @@
-package com.example.mystore.ui.productList
+package com.example.mystore.ui.productList.epoxy
 
 import androidx.lifecycle.viewModelScope
 import com.airbnb.epoxy.CarouselModel_
 import com.airbnb.epoxy.TypedEpoxyController
-import com.example.mystore.epoxy.FilterEpoxyModel
-import com.example.mystore.epoxy.ProductEpoxyModel
 import com.example.mystore.data.model.domain.Filter
+import com.example.mystore.ui.productList.ProductAndFilterUiState
+import com.example.mystore.ui.productList.ProductViewModel
 import kotlinx.coroutines.launch
 import java.lang.RuntimeException
 import java.util.*

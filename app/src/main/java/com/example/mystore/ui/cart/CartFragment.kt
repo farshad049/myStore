@@ -3,6 +3,7 @@ package com.example.mystore.ui.cart
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,9 +11,9 @@ import com.airbnb.epoxy.EpoxyTouchHelper
 import com.example.mystore.R
 import com.example.mystore.data.model.ui.UiProductInCart
 import com.example.mystore.databinding.FragmentCartBinding
-import com.example.mystore.epoxy.CartEpoxyModel
-import com.example.mystore.ui.BaseFragment
 import com.example.mystore.ui.MainActivity
+import com.example.mystore.ui.cart.epoxy.CartEpoxyModel
+import com.example.mystore.ui.cart.epoxy.CartFragmentEpoxyController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -23,7 +24,7 @@ import java.math.BigDecimal
 import java.text.NumberFormat
 
 @AndroidEntryPoint
-class CartFragment: BaseFragment(R.layout.fragment_cart) {
+class CartFragment: Fragment(R.layout.fragment_cart) {
 
     private var _binding : FragmentCartBinding? = null
     private val binding by lazy { _binding!! }

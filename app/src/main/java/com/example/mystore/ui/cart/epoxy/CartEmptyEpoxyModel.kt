@@ -1,7 +1,8 @@
-package com.example.mystore.epoxy
+package com.example.mystore.ui.cart.epoxy
 
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelCartEmptyBinding
+import com.example.mystore.epoxy.ViewBindingKotlinModel
 
 data class CartEmptyEpoxyModel(
     private val onButtonClick: () -> Unit

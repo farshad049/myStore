@@ -66,6 +66,7 @@ dependencies {
     def epoxyVersion="4.6.3"
     implementation "com.airbnb.android:epoxy:$epoxyVersion"
 
+
     //facebook shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 

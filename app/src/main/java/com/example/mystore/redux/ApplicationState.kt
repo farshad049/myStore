@@ -6,7 +6,7 @@ import com.example.mystore.data.model.domain.DomainUser
 
 
 data class ApplicationState(
-    val domainUser : DomainUser? = null,
+    val user : UserLoginResponse = UserLoginResponse.UnAuthenticated(),
     val products:List<DomainProduct> = emptyList(),
     val favoriteProductIds : Set<Int> = emptySet(),
     val expandedProductIds : Set<Int> = emptySet(),
@@ -20,4 +20,20 @@ data class ApplicationState(
         val filters : Set<Filter> = emptySet(),
         val selectedFilter : Filter? = null
     )
+
+
+    sealed interface UserLoginResponse{
+        data class Authenticated (val user : DomainUser) : UserLoginResponse
+        data class UnAuthenticated (val error : String? = null) : UserLoginResponse
+
+        fun getGreetingMessage():String{
+            return if (this is Authenticated) user.greetingMessage else "Sign in"
+        }
+
+        fun getEmail():String{
+            return if (this is Authenticated) user.email else ""
+        }
+    }
+
+
 }

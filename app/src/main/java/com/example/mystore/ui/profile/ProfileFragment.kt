@@ -33,10 +33,10 @@ class ProfileFragment:Fragment(R.layout.fragment_profile) {
         val controller = ProfileEpoxyController(userProfileItemGenerator,onClicks)
         binding.epoxyRecyclerView.setController(controller)
 
-        profileViewModel.store.stateFlow.map { it.domainUser }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner){domainUser->
-            controller.setData(domainUser)
-            binding.tvWelcome.text = domainUser?.greetingMessage ?: "Sign in"
-            binding.tvEmail.text = domainUser?.email
+        profileViewModel.store.stateFlow.map { it.user }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner){ user->
+            controller.setData(user)
+            binding.tvWelcome.text = user.getGreetingMessage()
+            binding.tvEmail.text = user.getEmail()
         }
 
 

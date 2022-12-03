@@ -4,12 +4,13 @@ import com.example.mystore.data.model.domain.Address
 import com.example.mystore.data.model.domain.DomainUser
 import com.example.mystore.data.model.domain.Name
 import com.example.mystore.data.model.network.NetworkUser
-import java.util.*
+import com.example.mystore.util.capitalize
 import javax.inject.Inject
+
 
 class UserMapper @Inject constructor() {
 
-    fun buildFrom(networkUser : NetworkUser) : DomainUser{
+    fun buildFrom(networkUser : NetworkUser) : DomainUser {
         return DomainUser(
             id = networkUser.id ,
             name =
@@ -37,13 +38,4 @@ class UserMapper @Inject constructor() {
 
 }
 
-fun String.capitalize() :String{
-    return this.replaceFirstChar {
-        if (it.isLowerCase()){
-            it.titlecase(Locale.getDefault())
-        }else{
-            it.toString()
-        }
-    }
-}
 

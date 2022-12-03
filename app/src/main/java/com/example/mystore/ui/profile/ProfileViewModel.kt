@@ -1,14 +1,15 @@
 package com.example.mystore.ui.profile
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mystore.data.model.mapper.UserMapper
 import com.example.mystore.data.repository.AuthRepository
 import com.example.mystore.redux.ApplicationState
 import com.example.mystore.redux.Store
+import com.example.mystore.util.capitalize
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,31 +19,38 @@ class ProfileViewModel @Inject constructor(
     private val userMapper: UserMapper
 ):ViewModel() {
 
+    private fun ResponseBody?.parseError():String? {
+        return this?.byteStream()?.bufferedReader()?.readLine()?.capitalize()
+    }
+
+
+
     fun login (username: String ,password: String) = viewModelScope.launch {
         val response = authRepository.login(username , password)
-        Log.e("LOGIN", response.body().toString())
 
         if (response.isSuccessful){
             val userResponse = authRepository.login(4)
             store.update { currentState ->
-                currentState.copy(
-                    domainUser = userResponse.body()?.let { userMapper.buildFrom(it) }
+                val authState = userResponse.body()?.let {body ->
+                    ApplicationState.UserLoginResponse.Authenticated(user = userMapper.buildFrom(body))
+                } ?: ApplicationState.UserLoginResponse.UnAuthenticated(error = response.errorBody()?.parseError())
+                return@update currentState.copy(user = authState)
+            }
+        }else{
+            store.update { currentState ->
+                return@update currentState.copy(
+                    user= ApplicationState.UserLoginResponse.UnAuthenticated(error = response.errorBody()?.parseError())
                 )
             }
 
-            if(userResponse.body() == null){
-                Log.e("LOGIN", response.errorBody()?.toString() ?: response.message())
-            }
-
-        }else{
-            Log.e("LOGIN", response.errorBody()?.byteStream()?.bufferedReader()?.readLine() ?: "invalid login")
         }
     }
 
 
+
     fun logout() = viewModelScope.launch {
         store.update {
-            it.copy(domainUser = null)
+            it.copy(user = ApplicationState.UserLoginResponse.UnAuthenticated())
         }
     }
 

@@ -11,6 +11,7 @@ import com.example.mystore.ui.profile.epoxy.ProfileEpoxyController
 import com.example.mystore.ui.profile.epoxy.ProfileFragmentOnClicks
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -37,6 +38,12 @@ class ProfileFragment:Fragment(R.layout.fragment_profile) {
             controller.setData(user)
             binding.tvWelcome.text = user.getGreetingMessage()
             binding.tvEmail.text = user.getEmail()
+        }
+
+
+        //run the intent based on which item does user clicked
+        profileViewModel.intentFlow.filterNotNull().asLiveData().observe(viewLifecycleOwner){intent->
+            startActivity(intent)
         }
 
 

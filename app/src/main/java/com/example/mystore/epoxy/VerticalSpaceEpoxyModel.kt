@@ -14,5 +14,4 @@ data class VerticalSpaceEpoxyModel(
             ViewGroup.LayoutParams.MATCH_PARENT, height
         )
     }
-
 }

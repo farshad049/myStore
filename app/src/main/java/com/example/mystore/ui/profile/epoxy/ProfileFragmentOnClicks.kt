@@ -15,7 +15,7 @@ class ProfileFragmentOnClicks (private val viewModel : ProfileViewModel) {
     fun onProfileItemSelected(id: Int) {
         when (id) {
             R.drawable.ic_round_phone_24 -> {
-                // call intent
+                viewModel.sendCallIntent()
             }
             R.drawable.ic_round_location_on_24 -> {
                 // location intent

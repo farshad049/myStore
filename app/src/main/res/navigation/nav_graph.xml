@@ -20,4 +20,9 @@
         android:name="com.example.mystore.ui.cart.CartFragment"
         android:label="CartFragment"
         tools:layout="@layout/fragment_cart"/>
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.example.mystore.ui.explore.ExploreFragment"
+        android:label="ExploreFragment"
+        tools:layout="@layout/fragment_explore"/>
 </navigation>

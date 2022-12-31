@@ -39,7 +39,8 @@ class MainActivity : AppCompatActivity() {
         topLevelDestinationIds = setOf(
             R.id.productListFragment,
             R.id.profileFragment,
-            R.id.cartFragment
+            R.id.cartFragment,
+            R.id.exploreFragment
         )
         )
 

@@ -102,7 +102,7 @@ class ProductEpoxyController(
     private fun onAddToCartClick(selectedProductId: Int){
         viewModel.viewModelScope.launch {
             viewModel.store.update { currentState->
-                return@update viewModel.uiAddToCartUpdater.onAddToCart(selectedProductId , currentState)
+                return@update viewModel.uiProductInCartUpdater.onAddToCart(selectedProductId , currentState)
             }
         }
     }

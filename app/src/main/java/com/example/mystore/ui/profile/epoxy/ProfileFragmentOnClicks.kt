@@ -18,7 +18,7 @@ class ProfileFragmentOnClicks (private val viewModel : ProfileViewModel) {
                 viewModel.sendCallIntent()
             }
             R.drawable.ic_round_location_on_24 -> {
-                // location intent
+                viewModel.sendMapIntent()
             }
             R.drawable.ic_round_logout_24 -> {
                 viewModel.logout()

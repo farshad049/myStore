@@ -109,7 +109,7 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
                     viewModel.viewModelScope.launch {
                         model?.let {epoxyModel->
                             viewModel.store.update {
-                                return@update viewModel.uiAddToCartUpdater.onAddToCart(
+                                return@update viewModel.uiProductInCartUpdater.onAddToCart(
                                     productId = epoxyModel.uiProductInCart.uiProduct.product.id ,
                                     currentState = it
                                 )

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mystore.data.model.domain.Address
 import com.example.mystore.data.model.mapper.UserMapper
 import com.example.mystore.data.repository.AuthRepository
 import com.example.mystore.redux.ApplicationState
@@ -79,5 +80,20 @@ class ProfileViewModel @Inject constructor(
             intent.data = Uri.parse("tel:$phoneNumber")
             _intentFlow.emit(intent)
         }
+
+
+    fun sendMapIntent() = viewModelScope.launch{
+        val address : Address = store.read {
+            (it.user as ApplicationState.UserLoginResponse.Authenticated).user.address
+        }
+
+        val uri = Uri.parse("geo:${address.lat},${address.long}?z=9&q=${address.city}")
+
+        val mapIntent = Intent(Intent.ACTION_VIEW, uri)
+        //i can set this if i want intent to be open only with google map and not other map apps
+        //mapIntent.setPackage("com.google.android.apps.maps")
+        _intentFlow.emit(mapIntent)
+
+    }
 }
 

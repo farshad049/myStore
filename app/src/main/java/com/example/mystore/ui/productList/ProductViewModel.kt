@@ -7,7 +7,7 @@ import com.example.mystore.data.model.domain.Filter
 import com.example.mystore.redux.ApplicationState
 import com.example.mystore.redux.Store
 import com.example.mystore.redux.reducer.UiProductListReducer
-import com.example.mystore.redux.updater.UiAddToCartUpdater
+import com.example.mystore.redux.updater.UiProductInCartUpdater
 import com.example.mystore.redux.updater.UiProductFavoriteUpdater
 import com.example.mystore.util.FilterGenerator
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ class ProductViewModel @Inject constructor(
     val store : Store<ApplicationState>,
     val uiProductListReducer: UiProductListReducer,
     val uiProductFavoriteUpdater: UiProductFavoriteUpdater,
-    val uiAddToCartUpdater: UiAddToCartUpdater ,
+    val uiProductInCartUpdater: UiProductInCartUpdater,
     private val filterGenerator: FilterGenerator,
     private val repository : ProductRepository,
     ) : ViewModel() {

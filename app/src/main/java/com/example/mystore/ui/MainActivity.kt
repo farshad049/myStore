@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
             R.id.productListFragment,
             R.id.profileFragment,
             R.id.cartFragment,
-            R.id.exploreFragment
+            R.id.exploreFragment,
+            R.id.exploreFragmentV2
         )
         )
 

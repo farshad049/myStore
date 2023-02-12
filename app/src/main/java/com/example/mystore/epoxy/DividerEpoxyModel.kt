@@ -2,9 +2,8 @@ package com.example.mystore.epoxy
 
 import android.view.ViewGroup
 import androidx.annotation.Dimension
-import androidx.annotation.Dimension.PX
+import androidx.annotation.Dimension.Companion.PX
 import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
 import com.example.mystore.R
 import com.example.mystore.databinding.ModelDividerBinding
 

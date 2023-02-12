@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+
     <style name="ShapeAppearanceOverlay.App.CornerRound" parent="">
         <item name="cornerSize">@dimen/corner_radius</item>
         <item name="cornerFamily">rounded</item>
@@ -10,5 +11,10 @@
     <style name="ShapeAppearanceOverlay.App.Circle" parent="">
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="Widget.Theme.MyStore.MyView" parent="">
+        <item name="android:background">@color/gray_400</item>
+        <item name="exampleColor">@color/light_blue_400</item>
     </style>
 </resources>

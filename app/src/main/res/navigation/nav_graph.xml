@@ -25,4 +25,9 @@
         android:name="com.example.mystore.ui.explore.ExploreFragment"
         android:label="ExploreFragment"
         tools:layout="@layout/fragment_explore"/>
+    <fragment
+        android:id="@+id/exploreFragmentV2"
+        android:name="com.example.mystore.ui.exploreInCompose.ExploreFragmentV2"
+        android:label="Explore (Compose)"
+        tools:layout="@layout/fragment_explore"/>
 </navigation>

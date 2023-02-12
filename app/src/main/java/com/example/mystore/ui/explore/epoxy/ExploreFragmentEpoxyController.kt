@@ -16,6 +16,7 @@ class ExploreFragmentEpoxyController(
             is ExploreFragmentViewState.Loading -> setupLoadingState()
             is ExploreFragmentViewState.Error -> setupErrorState(data)
             is ExploreFragmentViewState.Success -> setupSuccessState(data)
+            else -> {}
         }
 
     }

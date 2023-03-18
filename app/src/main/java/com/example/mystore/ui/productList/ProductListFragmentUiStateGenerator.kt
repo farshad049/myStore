@@ -18,20 +18,21 @@ class ProductListFragmentUiStateGenerator @Inject constructor(){
 
 
         //making a list with type of UiFilter
-        val uiFilter = productFilterInfo.filters.map {filter->
+        val uiFilterList= productFilterInfo.filters.map { filter->
             UiFilter(
-                filter = filter ,
-                isSelected = productFilterInfo.selectedFilter?.equals(filter) == true  //while making the list, it checks if this pedicular filter is selected , then send it to recycler vies as a selected one
+                filterOriginalAndDisplay = filter ,
+                isSelected = productFilterInfo.selectedFilter?.equals(filter) == true  //while making the list, it checks if this particular filter is selected , then send it to recycler view as a selected one
             )
         }.toSet()
+
 
         val filteredProducts = if (productFilterInfo.selectedFilter == null){
             uiProducts
         }else{
             uiProducts.filter { it.product.category == productFilterInfo.selectedFilter.filterOriginalName }
-
         }
 
-        return ProductAndFilterUiState.Success(uiFilter , filteredProducts)
+
+        return ProductAndFilterUiState.Success(uiFilterList , filteredProducts)
     }
 }

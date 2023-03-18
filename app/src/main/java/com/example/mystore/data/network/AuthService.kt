@@ -1,6 +1,6 @@
 package com.example.mystore.data.network
 
-import com.example.mystore.data.model.network.LoginResponse
+import com.example.mystore.ui.profile.model.LoginResponse
 import com.example.mystore.data.model.network.NetworkUser
 import com.example.mystore.data.model.network.post.LoginPostBody
 import retrofit2.Response

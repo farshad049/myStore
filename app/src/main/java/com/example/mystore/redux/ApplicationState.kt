@@ -1,8 +1,8 @@
 package com.example.mystore.redux
 
 import com.example.mystore.data.model.domain.DomainProduct
-import com.example.mystore.data.model.domain.Filter
 import com.example.mystore.data.model.domain.DomainUser
+import com.example.mystore.data.model.ui.UiFilter
 
 
 data class ApplicationState(
@@ -18,8 +18,8 @@ data class ApplicationState(
 
 {
     data class ProductFilterInfo(
-        val filters : Set<Filter> = emptySet(),
-        val selectedFilter : Filter? = null
+        val filters : Set<UiFilter.FilterOriginalAndDisplay> = emptySet(),
+        val selectedFilter : UiFilter.FilterOriginalAndDisplay? = null
     )
 
     data class ExplorePageMetadata(

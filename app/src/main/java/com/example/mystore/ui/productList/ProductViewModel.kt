@@ -2,8 +2,8 @@ package com.example.mystore.ui.productList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mystore.data.model.ui.UiFilter
 import com.example.mystore.data.repository.ProductRepository
-import com.example.mystore.data.model.domain.Filter
 import com.example.mystore.redux.ApplicationState
 import com.example.mystore.redux.Store
 import com.example.mystore.redux.reducer.UiProductListReducer
@@ -30,7 +30,7 @@ class ProductViewModel @Inject constructor(
         if (store.read { it.products.isNotEmpty() }) return@launch
 
             val response = repository.getProduct()
-            val filters :Set<Filter> = filterGenerator.generateFrom(response)
+            val filters :Set<UiFilter.FilterOriginalAndDisplay> = filterGenerator.generateFrom(response)
 
             store.update {applicationState->
                 return@update applicationState.copy(

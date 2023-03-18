@@ -3,7 +3,7 @@ package com.example.mystore.ui.productList.epoxy
 import androidx.lifecycle.viewModelScope
 import com.airbnb.epoxy.CarouselModel_
 import com.airbnb.epoxy.TypedEpoxyController
-import com.example.mystore.data.model.domain.Filter
+import com.example.mystore.data.model.ui.UiFilter
 import com.example.mystore.ui.productList.ProductAndFilterUiState
 import com.example.mystore.ui.productList.ProductViewModel
 import kotlinx.coroutines.launch
@@ -14,14 +14,14 @@ class ProductEpoxyController(
     private val viewModel: ProductViewModel
 ):TypedEpoxyController<ProductAndFilterUiState>() {
 
-    override fun buildModels(data: ProductAndFilterUiState?) {
+    override fun buildModels(data: ProductAndFilterUiState) {
 
         when (data) {
 
             is ProductAndFilterUiState.Success -> {
 
                 val filterList = data.filters.map {
-                    FilterEpoxyModel(it, ::onFilterClick).id(it.filter.filterOriginalName)
+                    FilterEpoxyModel(it, ::onFilterClick).id(it.filterOriginalAndDisplay.filterOriginalName)
                 }
                 CarouselModel_()
                     .models(filterList)
@@ -40,9 +40,11 @@ class ProductEpoxyController(
 
             is ProductAndFilterUiState.Loading -> {
                 repeat(7) {
-                    val epoxyId = UUID.randomUUID().toString()
-                    ProductEpoxyModel(uiProduct = null, ::onFavoriteClick, ::onExpandClick, ::onAddToCartClick).id(
-                        epoxyId
+                    ProductEpoxyModel(
+                        uiProduct = null,
+                        ::onFavoriteClick,
+                        ::onExpandClick,
+                        ::onAddToCartClick).id(UUID.randomUUID().toString()
                     ).addTo(this)
                 }
                 return
@@ -59,7 +61,7 @@ class ProductEpoxyController(
 
 
 
-    private fun onFavoriteClick(selectedFavoriteItemId:Int){
+    private fun onFavoriteClick(selectedFavoriteItemId: Int){
         viewModel.viewModelScope.launch {
             viewModel.store.update { currentState->
                 return@update viewModel.uiProductFavoriteUpdater.onProductFavorited(
@@ -76,25 +78,25 @@ class ProductEpoxyController(
                 val currentExpandIds= currentState.expandedProductIds
                 val newExpandIds= if (currentExpandIds.contains(selectedExpandedItemId)){
                     //if we this item is already expand,then unExpand it
-                    currentExpandIds.filter { it != selectedExpandedItemId }.toSet()
+                    currentExpandIds - selectedExpandedItemId
                 }else{
-                    currentExpandIds + setOf(selectedExpandedItemId)
+                    currentExpandIds + selectedExpandedItemId
                 }
                 return@update currentState.copy(expandedProductIds = newExpandIds)
             }
         }
     }
 
-    private fun onFilterClick(filter: Filter){
+    private fun onFilterClick(filter: UiFilter.FilterOriginalAndDisplay){
         viewModel.viewModelScope.launch {
             viewModel.store.update { currentState->
                 val currentSelectedFilter = currentState.productFilterInfo.selectedFilter
+                val newFilter= if (currentSelectedFilter != filter) filter else null
                 return@update currentState.copy(
                     productFilterInfo = currentState.productFilterInfo.copy(
-                        selectedFilter = if (currentSelectedFilter != filter) filter else null
+                        selectedFilter = newFilter
                     )
                 )
-
             }
         }
     }

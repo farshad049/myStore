@@ -37,7 +37,7 @@ class ProfileViewModel @Inject constructor(
         val response = authRepository.login(username , password)
 
         if (response.isSuccessful){
-            val userResponse = authRepository.login(4)
+            val userResponse = authRepository.getUserInfo(4)
             store.update { currentState ->
                 val authState = userResponse.body()?.let {body ->
                     ApplicationState.UserLoginResponse.Authenticated(user = userMapper.buildFrom(body))
@@ -57,8 +57,8 @@ class ProfileViewModel @Inject constructor(
 
 
     fun logout() = viewModelScope.launch {
-        store.update {
-            it.copy(user = ApplicationState.UserLoginResponse.UnAuthenticated())
+        store.update {currentState->
+            return@update currentState.copy(user = ApplicationState.UserLoginResponse.UnAuthenticated())
         }
     }
 
@@ -83,9 +83,10 @@ class ProfileViewModel @Inject constructor(
 
 
     fun sendMapIntent() = viewModelScope.launch{
-        val address : Address = store.read {
-            (it.user as ApplicationState.UserLoginResponse.Authenticated).user.address
+        val address : Address = store.read {currentState ->
+            (currentState.user as ApplicationState.UserLoginResponse.Authenticated).user.address
         }
+
 
         val uri = Uri.parse("geo:${address.lat},${address.long}?z=9&q=${address.city}")
 

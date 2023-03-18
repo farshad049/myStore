@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    >
+    android:animateLayoutChanges="true">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardProduct"
@@ -17,8 +15,7 @@
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,8 +27,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:scaleType="centerCrop"
                 android:background="@color/purple_100"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,9 +39,9 @@
             <androidx.core.widget.ContentLoadingProgressBar
                 android:id="@+id/progressImage"
                 style="?android:attr/progressBarStyleSmall"
-                android:indeterminateOnly="true"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:indeterminateOnly="true"
                 app:layout_constraintBottom_toBottomOf="@id/ivProduct"
                 app:layout_constraintEnd_toEndOf="@id/ivProduct"
                 app:layout_constraintStart_toStartOf="@id/ivProduct"
@@ -71,8 +68,8 @@
                 android:layout_marginHorizontal="6dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textStyle="bold"
                 android:textColor="?colorOnBackground"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivProduct"
                 app:layout_constraintTop_toTopOf="@id/ivProduct"
@@ -106,29 +103,27 @@
                 android:id="@+id/indicatorRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/btnAddToCard"
-                app:layout_constraintBottom_toBottomOf="@+id/btnAddToCard"
-                app:layout_constraintStart_toEndOf="@+id/tvPrice"
-                app:layout_constraintEnd_toStartOf="@+id/btnAddToCard"
-                app:indicatorColor="@color/purple_400"
-                app:trackColor="@color/purple_100"
-                android:progress="42"
                 android:max="50"
+                android:progress="42"
+                app:indicatorColor="@color/purple_400"
                 app:indicatorSize="28dp"
-                />
+                app:layout_constraintBottom_toBottomOf="@+id/btnAddToCard"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddToCard"
+                app:layout_constraintStart_toEndOf="@+id/tvPrice"
+                app:layout_constraintTop_toTopOf="@+id/btnAddToCard"
+                app:trackColor="@color/purple_100" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/indicatorRating"
-                app:layout_constraintStart_toStartOf="@id/indicatorRating"
-                app:layout_constraintEnd_toEndOf="@+id/indicatorRating"
-                app:layout_constraintBottom_toBottomOf="@id/indicatorRating"
-                tools:text="4.2"
-                android:textSize="10sp"
                 android:textColor="?colorOnSurface"
-                />
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@id/indicatorRating"
+                app:layout_constraintEnd_toEndOf="@+id/indicatorRating"
+                app:layout_constraintStart_toStartOf="@id/indicatorRating"
+                app:layout_constraintTop_toTopOf="@+id/indicatorRating"
+                tools:text="4.2" />
 
 
             <com.google.android.material.button.MaterialButton
@@ -152,6 +147,7 @@
                 android:backgroundTint="@color/teal_200"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
+                android:visibility="invisible"
                 app:icon="@drawable/ic_round_check_24"
                 app:iconGravity="textEnd"
                 app:iconSize="10dp"
@@ -159,8 +155,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/btnAddToCard"
                 app:layout_constraintStart_toStartOf="@+id/btnAddToCard"
                 app:layout_constraintTop_toTopOf="@+id/btnAddToCard"
-                android:visibility="invisible"
-                tools:visibility="visible"/>
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -169,12 +164,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/cardProduct"
         app:layout_constraintStart_toStartOf="@id/cardProduct"
         app:layout_constraintTop_toBottomOf="@id/cardProduct"
         tools:text="Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday"
-        tools:visibility="visible"
-        android:visibility="gone"/>
+        tools:visibility="visible" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerLayout"

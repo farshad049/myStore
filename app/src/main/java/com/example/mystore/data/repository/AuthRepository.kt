@@ -1,7 +1,7 @@
 package com.example.mystore.data.repository
 
 import com.example.mystore.data.model.mapper.UserMapper
-import com.example.mystore.data.model.network.LoginResponse
+import com.example.mystore.ui.profile.model.LoginResponse
 import com.example.mystore.data.model.network.NetworkUser
 import com.example.mystore.data.model.network.post.LoginPostBody
 import com.example.mystore.data.network.AuthService
@@ -16,7 +16,7 @@ class AuthRepository @Inject constructor(
         return authService.login(LoginPostBody(username = username , password =  password))
     }
 
-    suspend fun login (userId : Int):Response<NetworkUser>{
+    suspend fun getUserInfo (userId : Int):Response<NetworkUser>{
         return authService.fetchUser(userId)
     }
 }

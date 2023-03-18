@@ -14,6 +14,7 @@ import com.example.mystore.databinding.FragmentCartBinding
 import com.example.mystore.ui.MainActivity
 import com.example.mystore.ui.cart.epoxy.CartEpoxyModel
 import com.example.mystore.ui.cart.epoxy.CartFragmentEpoxyController
+import com.example.mystore.ui.cart.epoxy.CartFragmentOnClicks
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -34,7 +35,9 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
         super.onViewCreated(view, savedInstanceState)
         _binding= FragmentCartBinding.bind(view)
 
-        val controller = CartFragmentEpoxyController(viewModel , ::onGoShoppingClick)
+        val onClicks = CartFragmentOnClicks(viewModel, requireActivity())
+//        val controller = CartFragmentEpoxyController(viewModel , ::onGoShoppingClick , onClicks)
+        val controller = CartFragmentEpoxyController(onClicks)
         binding.epoxyRecyclerView.setController(controller)
 
         swipeToDelete()

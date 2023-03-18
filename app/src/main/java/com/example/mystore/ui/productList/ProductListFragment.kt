@@ -37,9 +37,9 @@ class  ProductListFragment : Fragment(R.layout.fragment_product_list) {
         combine(
             viewModel.uiProductListReducer.reduce(viewModel.store),
             viewModel.store.stateFlow.map { it.productFilterInfo },
-        ){uiProducts, productFilterInfo->
+        ) { uiProducts, productFilterInfo ->
 
-            uiStateGenerator.generate(uiProducts , productFilterInfo)
+            uiStateGenerator.generate(uiProducts, productFilterInfo)
 
         }.distinctUntilChanged().asLiveData().observe(viewLifecycleOwner){
             controller.setData(it)

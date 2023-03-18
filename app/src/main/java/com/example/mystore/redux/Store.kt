@@ -14,7 +14,7 @@ class Store<T>(initialState:T) {
 
     suspend fun update(updateBlock:(T) -> T) = mutex.withLock{
         val newState = updateBlock(_stateFlow.value)
-        _stateFlow.value=newState
+        _stateFlow.value= newState
     }
 
     suspend fun <S> read(readBlock:(T) -> S)=mutex.withLock {

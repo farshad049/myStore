@@ -12,7 +12,7 @@ import java.text.NumberFormat
 data class CartEpoxyModel(
     val uiProductInCart : UiProductInCart,
     val onFavoriteClick : (Int)-> Unit,
-    val onQuantityChangeClick : (Int , Int) -> Unit //first Int in Product Id ,second Int is quantity ,and i take care of both - and + functionality with same onClick
+    val onQuantityChangeClick : (Int , Int) -> Unit //first Int is Product Id ,second Int is quantity ,and i take care of both - and + functionality with same onClick
 ): ViewBindingKotlinModel<ModelCartItemBinding>(R.layout.model_cart_item) {
     override fun ModelCartItemBinding.bind() {
 

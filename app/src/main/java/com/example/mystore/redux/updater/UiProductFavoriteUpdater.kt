@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class UiProductFavoriteUpdater @Inject constructor() {
 
-    fun onProductFavorited(productId : Int,currentState : ApplicationState):ApplicationState{
+    fun onProductFavorited(productId : Int,currentState : ApplicationState): ApplicationState{
         val currentFavoriteIds= currentState.favoriteProductIds
         val newFavoriteIds= if (currentFavoriteIds.contains(productId)){
             //if we this item is already favorite,then unfavorite it

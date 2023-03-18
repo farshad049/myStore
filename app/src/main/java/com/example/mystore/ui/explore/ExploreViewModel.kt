@@ -27,7 +27,8 @@ class ExploreViewModel @Inject constructor(
     private val selectedProductIdFlow: Flow<Int> = store.stateFlow.map { it.explorePageMetadata.selectedProductId }
 
 
-    val uiViewState: StateFlow<ExploreFragmentViewState> = combine(
+    val uiViewState: StateFlow<ExploreFragmentViewState> =
+        combine(
         uiProductListFlow,
         cartQuantityFlow,
         selectedProductIdFlow
